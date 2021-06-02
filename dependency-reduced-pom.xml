@@ -85,6 +85,9 @@
               <classpathPrefix>./</classpathPrefix>
               <mainClass>chav1961.ji.Application</mainClass>
             </manifest>
+            <manifestEntries>
+              <SplashScreen-Image>splash.png</SplashScreen-Image>
+            </manifestEntries>
           </archive>
         </configuration>
       </plugin>

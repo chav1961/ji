@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<localization xmlns="http://www.i18n.purelib.chav1961.ru/">
+	<lang name="en">
+<!-- Application localization -->
+		<key name="Application.title">(c) 2019, A.V.Chernomyrdin aka chav1961, Mercury landing V.R.=1.0, static content editor</key>  
+	</lang>
+	<lang name="ru">
+	
+<!-- Application localization -->
+		<key name="Application.title">(c) 2019, A.V.Chernomyrdin aka chav1961, Mercury landing V.R.=1.0, редактор статического контента</key>  
+	</lang>
+</localization>
