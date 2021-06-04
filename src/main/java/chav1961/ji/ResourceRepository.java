@@ -12,10 +12,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.MalformedURLException;
 import java.net.URI;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.imageio.ImageIO;
+import javax.swing.JComponent;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.synth.SynthLookAndFeel;
 
 import chav1961.ji.repos.NewspaperNotesRepository;
 import chav1961.purelib.basic.PureLibSettings;
@@ -37,6 +42,7 @@ public class ResourceRepository {
 	public static final Map<ApplicationFont,Font>		FONTS = new HashMap<>();
 	public static final Map<ApplicationImage,Image>		IMAGES = new HashMap<>();
 	public static final NewspaperNotesRepository		NEWS;
+	public static final Map<Class<?>,HelpContent>		TUTORIALS = new HashMap<>();
 	
 	public enum ApplicationFont {
 		FONT_1("OglIeUcs8.ttf"),
@@ -70,7 +76,9 @@ public class ResourceRepository {
 	}
 	
 	public enum ApplicationImage {
-		NEWSPAPER_BACKGROUND("background.png");
+		NEWSPAPER_BACKGROUND("newspaper.png"),
+		CARDS_BACKGROUND("wood.jpg"),
+		SHIP_ICON("ship.png");
 		
 		private final String	fontName;
 		
@@ -128,13 +136,14 @@ public class ResourceRepository {
 				for(int index = step; index < 10; index++) {
 					pi.caption("test: "+index);
 					pi.processed(index);
-					Thread.sleep(1000);
+					Thread.sleep(100);
 				}
 				trans.rollback();
 			} finally {
 				pi.end();
 			}
-		} catch (EnvironmentException | InterruptedException e) {
+			
+		} catch (EnvironmentException | InterruptedException /*| ParseException | IOException | UnsupportedLookAndFeelException*/ e) {
 			e.printStackTrace();
 			throw new PreparationException(e.getLocalizedMessage(),e);
 		}
@@ -185,5 +194,9 @@ public class ResourceRepository {
 			}
 		}
 		return success;
+	}
+	
+	public static class HelpContent {
+		
 	}
 }

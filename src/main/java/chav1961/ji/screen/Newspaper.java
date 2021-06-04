@@ -32,8 +32,6 @@ import chav1961.ji.repos.NewspaperNotesRepository.NewspaperNote;
 
 public class Newspaper extends JComponent {
 	private static final long 			serialVersionUID = 1L;
-	private static final String			ORD1_NAME = "", ORD2_NAME = "", H_BAR_NAME = "";
-	private static final String			NOTE_REPO_NAME = "";
 	private static final int			MAX_NOTES = 10;
 	
 	private static final float			PAGE_WIDTH = 100;
@@ -92,8 +90,14 @@ public class Newspaper extends JComponent {
 		}
 	}
 	
-	public enum NoteType {
-		All
+	public enum StandardNoteType {
+		TSAR_START,
+		EPIC_FAIL,
+		EPIC_WIN,
+		FACTORY_EXPANDED,
+		SHIPYARD_EXPANDED,
+		UNIVERSITY_EXPANDED,
+		NEW_TECHNOLOGY_JENNY;
 	}
 	
 	private final List<NewspaperNote>	notes = new ArrayList<>();
@@ -149,10 +153,13 @@ public class Newspaper extends JComponent {
 	}
 	
 	public void appendScratchNotifications() {
-		while (notes.size() < MAX_NOTES) {
-			final int	index = (int) (ResourceRepository.NEWS.getSize(currentYear(), currentQuarter()) * Math.random()); 
-			
-			notes.add(ResourceRepository.NEWS.getNote(currentYear(), currentQuarter(), index));
+		for (int count = notes.size(); count < MAX_NOTES; count++) {
+			final int			index = (int) (ResourceRepository.NEWS.getSize(currentYear(), currentQuarter()) * Math.random());
+			final NewspaperNote	note = ResourceRepository.NEWS.getNote(currentYear(), currentQuarter(), index);
+
+			if (note != null) {
+				notes.add(note);
+			}
 		}
 	}
 

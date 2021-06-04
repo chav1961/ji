@@ -3,28 +3,32 @@ package chav1961.ji.repos;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
-import chav1961.ji.screen.Newspaper.NoteType;
+import chav1961.ji.screen.Newspaper.StandardNoteType;
 import chav1961.ji.screen.Newspaper.Quarter;
 import chav1961.purelib.basic.exceptions.SyntaxException;
 import chav1961.purelib.streams.JsonStaxParser;
 import chav1961.purelib.streams.interfaces.JsonStaxParserLexType;
 
 public class NewspaperNotesRepository {
-	private static final String	CAPTION = "caption";
-	private static final String	SUBCAPTION = "subcaption";
-	private static final String	MIN_YEAR = "minYear";
-	private static final String	MAX_YEAR = "maxYear";
-	private static final String	CONTENT = "content";
-	private static final String	YEAR = "year";
-	private static final String	QUARTER = "quarter";
-	private static final String	BODY = "body";
+	private static final String			CAPTION = "caption";
+	private static final String			SUBCAPTION = "subcaption";
+	private static final String			MIN_YEAR = "minYear";
+	private static final String			MAX_YEAR = "maxYear";
+	private static final String			CONTENT = "content";
+	private static final String			STANDARD = "standard";
+	private static final String			TYPE = "type";
+	private static final String			YEAR = "year";
+	private static final String			QUARTER = "quarter";
+	private static final String			BODY = "body";
 	
-	private final String		caption;
-	private final String		subCaption;
-	private final int			minYear, maxYear;
-	private final NoteRecord[]	content;
+	private final String				caption;
+	private final String				subCaption;
+	private final int					minYear, maxYear;
+	private final NoteRecord[]			content;
+	private final StandardNoteRecord[]	standard;
 	
 	public NewspaperNotesRepository(final JsonStaxParser repoContent) throws SyntaxException, IOException {
 		if (repoContent == null) {
@@ -32,9 +36,10 @@ public class NewspaperNotesRepository {
 		}
 		else {
 			if (repoContent.next() == JsonStaxParserLexType.START_OBJECT) {
-				String			_caption = null, _subcaption = null;
-				int				_minYear = -1, _maxYear = -1;
-				NoteRecord[]	_content = null;
+				String					_caption = null, _subcaption = null;
+				int						_minYear = -1, _maxYear = -1;
+				NoteRecord[]			_content = null;
+				StandardNoteRecord[]	_standard = null;
 				
 loop:			for (JsonStaxParserLexType item : repoContent) {
 					switch(item) {
@@ -67,6 +72,14 @@ loop:			for (JsonStaxParserLexType item : repoContent) {
 								case CONTENT	:
 									if (repoContent.next() == JsonStaxParserLexType.NAME_SPLITTER && repoContent.next() == JsonStaxParserLexType.START_ARRAY) {
 										_content = loadContent(repoContent);
+										if (repoContent.current() != JsonStaxParserLexType.END_ARRAY) {
+											throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: ']' awaited");
+										}
+									}
+									break;
+								case STANDARD	:
+									if (repoContent.next() == JsonStaxParserLexType.NAME_SPLITTER && repoContent.next() == JsonStaxParserLexType.START_ARRAY) {
+										_standard = loadStandard(repoContent);
 										if (repoContent.current() != JsonStaxParserLexType.END_ARRAY) {
 											throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: ']' awaited");
 										}
@@ -110,6 +123,21 @@ loop:			for (JsonStaxParserLexType item : repoContent) {
 				else {
 					this.content = _content;
 				}
+				if (_standard == null) {
+					throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: mandatory field ["+STANDARD+"] not found");
+				}
+				else {
+					this.standard = _standard;
+					Arrays.sort(this.standard);
+					
+					for (StandardNoteType item : StandardNoteType.values()) {
+						final NewspaperNote	note = seekStandardNote(item);
+						
+						if (note == null) {
+							throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: standard notes does't contain mandatory item ["+item+"]");
+						}
+					}
+				}
 			}
 			else {
 				throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: '{' awaited");
@@ -151,18 +179,14 @@ loop:			for (JsonStaxParserLexType item : repoContent) {
 		return maxYear;
 	}
 	
-	public static NewspaperNote getTypedNote(final NoteType type, final Object... parameters) {
+	public NewspaperNote getTypedNote(final StandardNoteType type, final Object... parameters) {
 		if (type == null) {
 			throw new NullPointerException("Note type can't be null");
 		}
 		else {
-			switch (type) {
-				case All:
-					break;
-				default:
-					throw new UnsupportedOperationException("Note type ["+type+"] is not supported yet");
-			}
-			return null;
+			final NewspaperNote	note = seekStandardNote(type);
+
+			return new NewspaperNote(note.getCaption(), String.format(note.getBody(),parameters));
 		}
 	}
 	
@@ -263,7 +287,6 @@ loop:	for (JsonStaxParserLexType item : repoContent) {
 	}
 
 	private static NewspaperNote loadNoteContent(final JsonStaxParser repoContent) throws SyntaxException, IllegalStateException, IOException {
-		// TODO Auto-generated method stub
 		String	_caption = null;
 		String	_body = null;
 		
@@ -304,6 +327,72 @@ loop:	for (JsonStaxParserLexType item : repoContent) {
 		}
 	}
 
+	private static StandardNoteRecord[] loadStandard(final JsonStaxParser repoContent) throws SyntaxException, IOException {
+		final List<StandardNoteRecord>	result = new ArrayList<>();
+		
+loop:	for (JsonStaxParserLexType item : repoContent) {
+			switch (item) {
+				case END_ARRAY		:
+					break loop;
+				case LIST_SPLITTER	:
+					break;
+				case START_OBJECT	:
+					result.add(loadStandardNote(repoContent));
+					break;
+				default:
+					throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: '{' awaited");
+			}
+		}
+		return result.toArray(new StandardNoteRecord[result.size()]);
+	}
+
+	private static StandardNoteRecord loadStandardNote(final JsonStaxParser repoContent) throws SyntaxException, IOException {
+		StandardNoteType	_type = null;
+		NewspaperNote		_body = null;
+		
+loop:	for (JsonStaxParserLexType item : repoContent) {
+			switch (item) {
+				case END_OBJECT		:
+					break loop;
+				case LIST_SPLITTER	:
+					break;
+				case NAME			:
+					switch (repoContent.name()) {
+						case TYPE	:
+							if (repoContent.next() == JsonStaxParserLexType.NAME_SPLITTER && repoContent.next() == JsonStaxParserLexType.STRING_VALUE) {
+								_type = StandardNoteType.valueOf(repoContent.stringValue());
+							}
+							break;
+						case CONTENT	:
+							if (repoContent.next() == JsonStaxParserLexType.NAME_SPLITTER && repoContent.next() == JsonStaxParserLexType.START_OBJECT) {
+								_body = loadNoteContent(repoContent);
+							}
+							break;
+						default :
+							throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: unknown field name ["+repoContent.name()+"]");
+					}
+					break;
+				default:
+					throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: name or '}' awaited");
+			}
+		}
+		if (_type == null) {
+			throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: mandatory field ["+TYPE+"] not found");
+		}
+		else if (_body == null) {
+			throw new SyntaxException(repoContent.row(), repoContent.col(), "Illegal Json content: mandatory field ["+CONTENT+"] not found");
+		}
+		else {
+			return new StandardNoteRecord(_type, _body);
+		}
+	}
+
+	private NewspaperNote seekStandardNote(final StandardNoteType item) {
+		final StandardNoteRecord	rec = new StandardNoteRecord(item, null);
+		
+		return standard[Arrays.binarySearch(standard,rec)].note;
+	}
+	
 	public static class NewspaperNote {
 		private final String	caption;
 		private final String 	body;
@@ -326,7 +415,8 @@ loop:	for (JsonStaxParserLexType item : repoContent) {
 			return "Note [caption=" + caption + ", body=" + body + "]";
 		}
 	}	
-	
+
+
 	private static class NoteRecord {
 		final int		year;
 		final Quarter	quarter;
@@ -344,5 +434,25 @@ loop:	for (JsonStaxParserLexType item : repoContent) {
 		}
 	}
 	
+	private static class StandardNoteRecord implements Comparable<StandardNoteRecord> {
+		final StandardNoteType	type;
+		final NewspaperNote		note;
+		
+		private StandardNoteRecord(final StandardNoteType type, final NewspaperNote note) {
+			this.type = type;
+			this.note = note;
+		}
+
+		@Override
+		public int compareTo(StandardNoteRecord o) {
+			return o.type.ordinal() - type.ordinal();
+		}
+		
+		@Override
+		public String toString() {
+			return "StandardNoteRecord [type=" + type + ", note=" + note + "]";
+		}
+
+	}
 	
 }

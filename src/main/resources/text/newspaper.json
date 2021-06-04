@@ -1,8 +1,34 @@
 {"caption" : "СОЮЗЪ МЕЧА И ОРАЛА", "subcaption" : "квартальный вёстникъ", "minYear" : 1800, "maxYear" : 1917,
  "content" :
- 	[{"year" : 1800, "quarter" : "SPRING", "content" :
+ 	[
+ 	{"year" : 1800, "quarter" : "WINTER", "content" :
  		[{"caption" : "Новый вёкъ грядётъ", "body" : "Наступил новый век"}
  		]
  	 },
+ 	{"year" : 1800, "quarter" : "SPRING", "content" :
+ 		[{"caption" : "Новый вёкъ грядётъ", "body" : "Наступил новый век"}
+ 		]
+ 	 },
+ 	{"year" : 1800, "quarter" : "SUMMER", "content" :
+ 		[{"caption" : "Новый вёкъ грядётъ", "body" : "Наступил новый век"}
+ 		]
+ 	 },
+ 	{"year" : 1800, "quarter" : "AUTUMN", "content" :
+ 		[{"caption" : "Новый вёкъ грядётъ", "body" : "Наступил новый век"}
+ 		]
+ 	 }
+ 	],
+ "standard" :
+ 	[
+ 		{"type" : "TSAR_START", "content" : {"caption" : "Новый правитель воцарился", "body" : "Ликованию народа нетъ предела! Новый правитель воцарился"}},
+ 		{"type" : "EPIC_FAIL", "content" : {"caption" : "Национальная катастрофа", "body" : "Наступил новый век"}},
+ 		{"type" : "EPIC_WIN", "content" : {"caption" : "ДА ДРАВСТВУЕТЪ ПОБЕДА!", "body" : "Наступил новый век"}},
+ 		
+ 		{"type" : "FACTORY_EXPANDED", "content" : {"caption" : "Новый вёкъ грядётъ в", "body" : "Наступил новый век"}},
+ 		{"type" : "SHIPYARD_EXPANDED", "content" : {"caption" : "Новый вёкъ грядётъ в", "body" : "Наступил новый век"}},
+ 		{"type" : "UNIVERSITY_EXPANDED", "content" : {"caption" : "Новый вёкъ грядётъ в", "body" : "Наступил новый век"}},
+ 		
+ 		{"type" : "NEW_TECHNOLOGY_JENNY", "content" : {"caption" : "Новый правитель воцарился", "body" : "УРА УРА УРА"}}
+ 		
  	]
 }
