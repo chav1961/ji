@@ -76,6 +76,7 @@ public class ResourceRepository {
 	}
 	
 	public enum ApplicationImage {
+		MAINMENU_BACKGROUND("mainmenu.jpg"),
 		NEWSPAPER_BACKGROUND("newspaper.png"),
 		CARDS_BACKGROUND("wood.jpg"),
 		SHIP_ICON("ship.png");

@@ -3,10 +3,31 @@
 	<lang name="en">
 <!-- Application localization -->
 		<key name="Application.title">(c) 2019, A.V.Chernomyrdin aka chav1961, Mercury landing V.R.=1.0, static content editor</key>  
+
+<!-- Menus localization -->
+		<key name="menu.screen"></key>  
+		<key name="menu.screen.tt"></key>  
+		<key name="menu.new">Start session</key>  
+		<key name="menu.new.tt">Start session</key>  
+		<key name="menu.load">Load session</key>  
+		<key name="menu.load.tt">Load session</key>  
+		<key name="menu.exit">Exit</key>  
+		<key name="menu.exit.tt">Exit application</key>  
+
 	</lang>
 	<lang name="ru">
 	
 <!-- Application localization -->
 		<key name="Application.title">(c) 2019, A.V.Chernomyrdin aka chav1961, Mercury landing V.R.=1.0, редактор статического контента</key>  
+
+<!-- Menus localization -->
+		<key name="menu.screen"></key>  
+		<key name="menu.screen.tt"></key>  
+		<key name="menu.new">Начать сессию</key>  
+		<key name="menu.new.tt">Начать сессию</key>  
+		<key name="menu.load">Продолжить сессию</key>  
+		<key name="menu.load.tt">Продолжить сессию</key>  
+		<key name="menu.exit">Завершить</key>  
+		<key name="menu.exit.tt">Завершить работу</key>  
 	</lang>
 </localization>

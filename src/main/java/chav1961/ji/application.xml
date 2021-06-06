@@ -23,6 +23,11 @@
 			<app:separator/>
 			<app:item name="menu.help.about" caption="menu.help.about" tooltip="menu.help.about.tt" action="helpAbout"/>
 		</app:submenu>
+		<app:submenu name="menu.screen" caption="menu.screen" tooltip="menu.screen.tt" icon="root://chav1961.ji.Application/images/mainmenu.jpg">
+			<app:item name="menu.new" caption="menu.new" tooltip="menu.new.tt" action="newGame" icon="root://chav1961.ji.Application/images/mainmenuNew.png"/>
+			<app:item name="menu.load" caption="menu.load" tooltip="menu.load.tt" action="loadGame" icon="root://chav1961.ji.Application/images/mainmenuLoad.png"/>
+			<app:item name="menu.exit" caption="menu.exit" tooltip="menu.exit.tt" action="exitGame" icon="root://chav1961.ji.Application/images/mainmenuExit.png"/>
+		</app:submenu>
 	</app:menu>
 	<app:keyset id="mainmenu.keyset">
 		<app:key code="N" ctrl="true" action="newFile"/>
