@@ -107,7 +107,7 @@ public class ResourceRepository {
 				ROOT_META = ContentModelFactory.forXmlDescription(ResourceRepository.class.getResourceAsStream("application.xml"));
 				pi.processed(++step);
 				pi.caption("Load Localizer...");
-				APP_LOCALIZER = LocalizerFactory.getLocalizer(ROOT_META.getRoot().getLocalizerAssociated());
+				APP_LOCALIZER = PureLibSettings.PURELIB_LOCALIZER.push(LocalizerFactory.getLocalizer(ROOT_META.getRoot().getLocalizerAssociated()));
 				pi.processed(++step);
 				
 				pi.caption("Load fonts...");

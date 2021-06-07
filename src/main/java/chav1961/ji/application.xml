@@ -19,6 +19,7 @@
 			<app:builtinSubmenu name="builtin.languages" caption="menu.tools.languages" tooltip="menu.tools.languages.tt"/>
 		</app:submenu>
 		<app:submenu name="menu.help" caption="menu.help" tooltip="menu.help.tt">
+			<app:item name="menu.help.finance" caption="menu.help.finance" tooltip="menu.help.finance.tt" help="menu.help.finance.help" icon="root://chav1961.ji.Application/images/mainmenuNew.png" action="test"/>
 			<app:item name="menu.help.startBrowser" caption="menu.help.startBrowser" tooltip="menu.help.startBrowser.tt" action="startBrowser"/>
 			<app:separator/>
 			<app:item name="menu.help.about" caption="menu.help.about" tooltip="menu.help.about.tt" action="helpAbout"/>

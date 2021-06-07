@@ -9,6 +9,7 @@ import java.net.URI;
 import java.util.HashSet;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.CountDownLatch;
 
 import javax.swing.ImageIcon;
 import javax.swing.JComponent;
@@ -22,6 +23,7 @@ import chav1961.ji.interfaces.ValueKeeper;
 import chav1961.ji.models.GoodsRecord;
 import chav1961.ji.models.GoodsRecord.TradeOperationType;
 import chav1961.ji.screen.GoodsToolbarCard;
+import chav1961.ji.screen.HelpPopup;
 import chav1961.ji.screen.MainMenu;
 import chav1961.ji.screen.Newspaper;
 import chav1961.ji.screen.Newspaper.Quarter;
@@ -41,7 +43,7 @@ import chav1961.purelib.ui.swing.interfaces.JComponentMonitor;
 import chav1961.purelib.ui.swing.interfaces.OnAction;
 import chav1961.purelib.ui.swing.useful.JStateString;
 
-public class Application extends JFrame {
+public class Application extends JFrame implements AutoCloseable {
 	private static final long 			serialVersionUID = -3215568116065439459L;
 	
 	private static final Set<Class<?>>	registeredWindowTypes = new HashSet<>();
@@ -49,13 +51,16 @@ public class Application extends JFrame {
 
 	private final Newspaper				newspaper = new Newspaper();
 	private final JStateString			state;
+	private final CountDownLatch		latch;
+	private volatile boolean			exitMarked = false;
 	
 	
-	public Application() throws LocalizationException, SyntaxException {
+	public Application(final CountDownLatch latch) throws LocalizationException, SyntaxException {
 		super(ResourceRepository.APP_LOCALIZER.getValue(APPLICATION_TITLE));
 		getContentPane().setLayout(new BorderLayout());
 		
 		this.state = new JStateString(LocalizerFactory.getLocalizer(ResourceRepository.ROOT_META.getRoot().getLocalizerAssociated()), true);
+		this.latch = latch;
 		getContentPane().add(state, BorderLayout.SOUTH);
 		state.setFont(ResourceRepository.ApplicationFont.FONT_9.getFont().deriveFont(Font.PLAIN, 18));
 		state.setMinimumSize(new Dimension(30,30));
@@ -101,6 +106,16 @@ public class Application extends JFrame {
 												  );
 
 		final MainMenu		mm = new MainMenu(ResourceRepository.ROOT_META.byUIPath(URI.create("ui:/model/navigation.top.mainmenu/navigation.node.menu.screen")),monitor,props); 
+
+				
+		SwingUtils.assignActionKey(mm, SwingUtils.KS_HELP, (e)->{
+			final ContentNodeMetadata	md = ResourceRepository.ROOT_META.byUIPath(URI.create("ui:/model/navigation.top.mainmenu/navigation.node.menu.help/navigation.leaf.menu.help.finance"));
+			
+			try{new HelpPopup(ResourceRepository.APP_LOCALIZER, Application.this, md, md.getApplicationPath(), 500, 800).showDialog();
+			} catch (LocalizationException exc) {
+				exc.printStackTrace();
+			}
+		}, "help");
 		
 		getContentPane().add(mm, BorderLayout.CENTER);
 		setMinimumSize(new Dimension(1024,768));
@@ -121,20 +136,33 @@ public class Application extends JFrame {
 
 	@OnAction("app:action:/exitGame")
 	public void exitApplication() {
-		System.exit(0);
+		if (!exitMarked) {
+			exitMarked = true;
+			setVisible(false);
+			dispose();
+			latch.countDown();
+		}
+	}
+
+	@Override
+	public void close() throws RuntimeException {
+		exitApplication();
 	}
 	
 	public static void main(String[] args) throws IOException, InterruptedException, SyntaxException {
-		try(final Localizer		l = ResourceRepository.APP_LOCALIZER) {
-			final Application	app = new Application();
+		final CountDownLatch	latch = new CountDownLatch(1);
+		
+		try(final Localizer		l = ResourceRepository.APP_LOCALIZER;
+			final Application	app = new Application(latch)) {
 			
 			app.setVisible(true);
-			
-			System.err.println("Start...");
+			latch.await();
 		} catch (LocalizationException e) {
-			System.err.println("Err...");
+			e.printStackTrace();
+			System.exit(128);
+		} finally {
+			System.exit(0);
 		}
-		// TODO Auto-generated method stub
 	}
 
 	public static void registerWindow(final JComponent type) {
@@ -256,5 +284,4 @@ public class Application extends JFrame {
 			}
 		}
 	}
-	
 }

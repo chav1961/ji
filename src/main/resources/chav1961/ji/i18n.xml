@@ -14,6 +14,10 @@
 		<key name="menu.exit">Exit</key>  
 		<key name="menu.exit.tt">Exit application</key>  
 
+		<key name="menu.help.finance">finance</key>  
+		<key name="menu.help.finance.tt">help finance</key>  
+		<key name="menu.help.finance.help">uri(menu.help.finance.help.cre)</key>  
+
 	</lang>
 	<lang name="ru">
 	
@@ -29,5 +33,10 @@
 		<key name="menu.load.tt">Продолжить сессию</key>  
 		<key name="menu.exit">Завершить</key>  
 		<key name="menu.exit.tt">Завершить работу</key>  
+	
+		<key name="menu.help.finance">финансы</key>  
+		<key name="menu.help.finance.tt">подсказак финансы</key>  
+		<key name="menu.help.finance.help">uri(menu.help.finance.help.cre)</key>  
+	
 	</lang>
 </localization>
