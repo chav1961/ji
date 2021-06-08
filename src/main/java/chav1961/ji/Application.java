@@ -28,6 +28,7 @@ import chav1961.ji.screen.MainMenu;
 import chav1961.ji.screen.Newspaper;
 import chav1961.ji.screen.Newspaper.Quarter;
 import chav1961.ji.screen.Newspaper.StandardNoteType;
+import chav1961.purelib.basic.URIUtils;
 import chav1961.purelib.basic.Utils;
 import chav1961.purelib.basic.exceptions.ContentException;
 import chav1961.purelib.basic.exceptions.LocalizationException;
@@ -53,9 +54,8 @@ public class Application extends JFrame implements AutoCloseable {
 	private final JStateString			state;
 	private final CountDownLatch		latch;
 	private volatile boolean			exitMarked = false;
-	
-	
-	public Application(final CountDownLatch latch) throws LocalizationException, SyntaxException {
+
+	public Application(final CountDownLatch latch) throws LocalizationException, SyntaxException, IOException {
 		super(ResourceRepository.APP_LOCALIZER.getValue(APPLICATION_TITLE));
 		getContentPane().setLayout(new BorderLayout());
 		
@@ -111,7 +111,7 @@ public class Application extends JFrame implements AutoCloseable {
 		SwingUtils.assignActionKey(mm, SwingUtils.KS_HELP, (e)->{
 			final ContentNodeMetadata	md = ResourceRepository.ROOT_META.byUIPath(URI.create("ui:/model/navigation.top.mainmenu/navigation.node.menu.help/navigation.leaf.menu.help.finance"));
 			
-			try{new HelpPopup(ResourceRepository.APP_LOCALIZER, Application.this, md, md.getApplicationPath(), 500, 800).showDialog();
+			try{new HelpPopup(ResourceRepository.APP_LOCALIZER, Application.this, md, md.getApplicationPath(), 600, 600).showDialog();
 			} catch (LocalizationException exc) {
 				exc.printStackTrace();
 			}
@@ -158,6 +158,9 @@ public class Application extends JFrame implements AutoCloseable {
 			app.setVisible(true);
 			latch.await();
 		} catch (LocalizationException e) {
+			e.printStackTrace();
+			System.exit(128);
+		} catch (Exception e) {
 			e.printStackTrace();
 			System.exit(128);
 		} finally {

@@ -1,9 +1,7 @@
 package chav1961.ji.screen;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -14,8 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.SpringLayout;
-import javax.swing.border.LineBorder;
 
 import chav1961.purelib.basic.exceptions.LocalizationException;
 import chav1961.purelib.i18n.interfaces.Localizer;
@@ -54,7 +50,7 @@ class HelpScreen extends JSplitPane {
 			this.meta = meta;
 			this.content = new JCreoleHelpWindow(localizer, meta.getHelpId()); 
 			
-			final JPanel		topPanel = new JPanel(new FlowLayout()), bottomPanel = new JPanel(), rightPanel = new JPanel(new GridLayout(2,1)); 
+			final JPanel		topPanel = new JPanel(new BorderLayout()), rightPanel = new JPanel(new GridLayout(2,1)); 
 			final JScrollPane	pane = new JScrollPane(content);
 
 			try{final Icon	icon = new ImageIcon(meta.getIcon().toURL());
@@ -64,9 +60,9 @@ class HelpScreen extends JSplitPane {
 			
 				image.setIcon(icon);
 				image.setPreferredSize(new Dimension(icon.getIconWidth(), icon.getIconHeight()));
-//				rightPanel.setPreferredSize(new Dimension(halfWidth, halfHeight));
+				rightPanel.setPreferredSize(new Dimension(halfWidth, halfHeight));
 				topPanel.setPreferredSize(new Dimension(width, halfHeight));
-				bottomPanel.setPreferredSize(new Dimension(width, halfHeight));
+				pane.setPreferredSize(new Dimension(width, halfHeight));
 				setPreferredSize(new Dimension(width, height));
 				setMaximumSize(new Dimension(width, height));
 				setDividerLocation(icon.getIconHeight());
@@ -74,20 +70,13 @@ class HelpScreen extends JSplitPane {
 				throw new LocalizationException(exc.getLocalizedMessage(),exc);
 			}
 
-			image.setBorder(new LineBorder(Color.RED));
-			caption1.setBorder(new LineBorder(Color.GREEN));
-			caption2.setBorder(new LineBorder(Color.BLUE));
-			pane.setBorder(new LineBorder(Color.MAGENTA));
-			content.setBorder(new LineBorder(Color.YELLOW));
-
 			rightPanel.add(caption1);
 			rightPanel.add(caption2);
-			topPanel.add(image);
-			topPanel.add(rightPanel);
-			bottomPanel.add(pane);
+			topPanel.add(image, BorderLayout.WEST);
+			topPanel.add(rightPanel, BorderLayout.CENTER);
 			
 			setLeftComponent(topPanel);
-			setRightComponent(bottomPanel);
+			setRightComponent(pane);
 			
 			fillLocalizedStrings();
 		}
