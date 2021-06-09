@@ -1,41 +1,10 @@
 package chav1961.ji.models;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-
-import chav1961.ji.interfaces.IconKeeper;
 import chav1961.ji.interfaces.ThreeStateSwitchKeeper;
 import chav1961.ji.interfaces.ValueKeeper;
+import chav1961.ji.models.interfaces.GoodsType;
 
 public class GoodsRecord {
-	public enum GoogsType implements IconKeeper {
-		CLOTHES("icon.png",""),
-		FURNITURE("icon.png",""),
-		TOOLS("icon.png",""),
-		WEAPON("icon.png",""),
-		FOOD("icon.png",""),
-		WOOD("icon.png",""),
-		IRON("icon.png",""),
-		PAPER("icon.png",""),
-		COTTON("icon.png",""),
-		SHIPS("icon.png",""),
-		COAL("icon.png",""),
-		MINE("icon.png",""),
-		OIL("icon.png",""),
-		GAZOLINE("icon.png","");
-		
-		private final Icon	icon; 
-		
-		GoogsType(final String iconURI, final String tooltipId) {
-			this.icon = new ImageIcon(this.getClass().getResource("icon.png"));
-		}
-		
-		@Override
-		public Icon getIcon() {
-			return icon;
-		}
-	}
-
 	public enum TradeOperationType implements ThreeStateSwitchKeeper<TradeOperationType> {
 		TRADE_BID(SwitchState.LEFT_ON),
 		TRADE_SELL(SwitchState.RIGHT_ON),
@@ -59,7 +28,7 @@ public class GoodsRecord {
 		}
 	}
 	
-	private final GoogsType		type;
+	private final GoodsType		type;
 	private int					total;
 	private int					price;
 	private int					available2Produce;
@@ -67,7 +36,7 @@ public class GoodsRecord {
 	private int					available2Sell;
 	private TradeOperationType	currentTradeState = TradeOperationType.TRADE_NEUTRAL;
 	
-	public GoodsRecord(final GoogsType type) throws NullPointerException {
+	public GoodsRecord(final GoodsType type) throws NullPointerException {
 		if (type == null) {
 			throw new NullPointerException("Goods type can't be null"); 
 		}
@@ -76,7 +45,7 @@ public class GoodsRecord {
 		}
 	}
 	
-	public GoogsType getType() {
+	public GoodsType getType() {
 		return type;
 	}
 

@@ -22,6 +22,7 @@ import chav1961.ji.interfaces.ThreeStateSwitchKeeper;
 import chav1961.ji.interfaces.ValueKeeper;
 import chav1961.ji.models.GoodsRecord;
 import chav1961.ji.models.GoodsRecord.TradeOperationType;
+import chav1961.ji.models.interfaces.GoodsType;
 import chav1961.ji.screen.GoodsToolbarCard;
 import chav1961.ji.screen.HelpPopup;
 import chav1961.ji.screen.MainMenu;
@@ -192,8 +193,8 @@ public class Application extends JFrame implements AutoCloseable {
 		private final GoodsRecord[]	recs; 
 		
 		private MyTableModel() {
-			final GoodsRecord[]	temp = {new GoodsRecord(GoodsRecord.GoogsType.CLOTHES),
-											new GoodsRecord(GoodsRecord.GoogsType.FOOD)
+			final GoodsRecord[]	temp = {new GoodsRecord(GoodsType.CLOTHES),
+											new GoodsRecord(GoodsType.FOOD)
 										};
 			
 			for (GoodsRecord item : temp) {
