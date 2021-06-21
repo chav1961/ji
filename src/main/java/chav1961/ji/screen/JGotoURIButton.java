@@ -36,15 +36,11 @@ public class JGotoURIButton extends JButton {
 		else {
 			final Icon		icon = new ImageIcon(meta.getIcon().toURL());
 			final URI		gotoReference = meta.getApplicationPath(); 
-			final Dimension	size = new Dimension(icon.getIconWidth()+2,icon.getIconHeight()+2);
 			
 			this.localizer = localizer;
 			this.meta = meta;
 			
 			setIcon(icon);
-			setMinimumSize(size);
-			setPreferredSize(size);
-			setMaximumSize(size);
 			addActionListener((e)->{
 				if (Desktop.isDesktopSupported()) {
 					try{Desktop.getDesktop().browse(URI.create(gotoReference.getSchemeSpecificPart()));
@@ -67,5 +63,9 @@ public class JGotoURIButton extends JButton {
 			}
 		}
 		return super.getToolTipText();
+	}
+	
+	public int getButtonSize() {
+		return Math.max(getIcon().getIconWidth(), getIcon().getIconHeight());
 	}
 }

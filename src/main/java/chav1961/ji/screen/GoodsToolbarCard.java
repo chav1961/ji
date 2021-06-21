@@ -43,8 +43,6 @@ public class GoodsToolbarCard extends JPanelWithImage {
 	private static final long 	serialVersionUID = -4675279556401388556L;
 	private static final int[]	COL_WIDTHS = {64, 120, 60, 100, 0};
 	private static final Icon	SHIP_ICON = new ImageIcon(ResourceRepository.ApplicationImage.SHIP_ICON.getImage());
-	private static final String	BLOOD_COLOR_NAME = "red2";
-	private static final Color	DEFAULT_BLOOD_COLOR_NAME = Color.RED;
 	
 	private final TableModel	model;
 	private final int			shipAvailable;
@@ -106,7 +104,7 @@ public class GoodsToolbarCard extends JPanelWithImage {
 	        
 	        shipments.setForeground(Color.WHITE);
 	        shipments.setFont(new Font("Monospace",Font.BOLD,32));
-	        caption.setForeground(PureLibSettings.colorByName(BLOOD_COLOR_NAME, DEFAULT_BLOOD_COLOR_NAME));
+	        caption.setForeground(PureLibSettings.colorByName(ResourceRepository.BLOOD_COLOR_NAME, ResourceRepository.DEFAULT_BLOOD_COLOR_NAME));
 	        caption.setFont(ResourceRepository.ApplicationFont.FONT_9.getFont().deriveFont(Font.BOLD, 64));
 	        
 	        topPanel.setPreferredSize(new Dimension(10,SHIP_ICON.getIconHeight() + 10));

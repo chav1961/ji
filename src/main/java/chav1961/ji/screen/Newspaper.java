@@ -7,12 +7,17 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.Stroke;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.font.LineBreakMeasurer;
 import java.awt.font.TextAttribute;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.GeneralPath;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.text.AttributedCharacterIterator;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +34,9 @@ import chav1961.ji.ResourceRepository;
 import chav1961.ji.ResourceRepository.ApplicationFont;
 import chav1961.ji.ResourceRepository.ApplicationImage;
 import chav1961.ji.repos.NewspaperNotesRepository.NewspaperNote;
+import chav1961.ji.utils.Utils;
+import chav1961.purelib.i18n.interfaces.Localizer;
+import chav1961.purelib.ui.swing.SwingUtils;
 
 public class Newspaper extends JComponent {
 	private static final long 			serialVersionUID = 1L;
@@ -100,13 +108,47 @@ public class Newspaper extends JComponent {
 		NEW_TECHNOLOGY_JENNY;
 	}
 	
+	private final Localizer				localizer;
 	private final List<NewspaperNote>	notes = new ArrayList<>();
 	private final List<AttributedCharacterIterator>	toDraw = new ArrayList<>();
-	private int					year = 1800;
-	private Quarter				quarter = Quarter.SPRING;
+	private final LeaveButton			leave = new LeaveButton((e)->processActionEvent(e));
+	private final JGotoURIButton		gotoURI;
+	private int							year = 1800;
+	private Quarter						quarter = Quarter.SPRING;
+	private ActionListener				listener = null;
 	
-	public Newspaper() {
-		
+	public Newspaper(final Localizer localizer) throws IOException {
+		if (localizer == null) {
+			throw new NullPointerException("Localizer can't be null"); 
+		}
+		else {
+			this.localizer = localizer;
+			this.gotoURI = new JGotoURIButton(localizer, Utils.buildContentReferenceByClass(this.getClass()));
+					
+			setLayout(null);
+			add(leave);
+			add(gotoURI);
+			addComponentListener(new ComponentListener() {
+				@Override public void componentShown(ComponentEvent e) {}
+				@Override public void componentMoved(ComponentEvent e) {}
+				@Override public void componentHidden(ComponentEvent e) {}
+				
+				@Override 
+				public void componentResized(ComponentEvent e) {
+					final int	leaveSize = leave.getButtonSize();
+					final int	gotoURISize = gotoURI.getButtonSize();
+					
+					leave.setBounds(leaveSize, leaveSize, leaveSize, leaveSize);
+					gotoURI.setBounds(getWidth() - 2 * gotoURISize, gotoURISize, gotoURISize, gotoURISize);
+				}
+			});
+			SwingUtils.assignActionKey(this, SwingUtils.KS_EXIT, (e)->leave.doClick(), "exit");
+			SwingUtils.assignActionKey(this, JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT, SwingUtils.KS_EXIT, (e)->leave.doClick(), "exit");
+		}
+	}
+	
+	public void setActionListener(final ActionListener listener) {
+		this.listener = listener;
 	}
 	
 	public int currentYear() {
@@ -185,6 +227,12 @@ public class Newspaper extends JComponent {
 			paintColumn(g2d, toDraw);
 		}
 		g2d.setTransform(oldAt);
+	}
+
+	private void processActionEvent(final ActionEvent event) {
+		if (listener != null) {
+			listener.actionPerformed(event);
+		}
 	}
 
 	private float getYSize() {

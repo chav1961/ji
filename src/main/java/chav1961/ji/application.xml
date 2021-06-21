@@ -29,6 +29,46 @@
 			<app:item name="menu.load" caption="menu.load" tooltip="menu.load.tt" action="loadGame" icon="root://chav1961.ji.Application/images/mainmenuLoad.png"/>
 			<app:item name="menu.exit" caption="menu.exit" tooltip="menu.exit.tt" action="exitGame" icon="root://chav1961.ji.Application/images/mainmenuExit.png"/>
 		</app:submenu>
+		<app:submenu name="menu.countries" caption="menu.countries" tooltip="menu.countries.tt">
+			<app:item name="menu.countries.KESSEL" caption="menu.countries.kessel" tooltip="menu.countries.kessel.tt" action="kessel"/>
+			<app:item name="menu.countries.PRAM" caption="menu.countries.pram" tooltip="menu.countries.pram.tt" action="pram"/>
+			<app:item name="menu.countries.LOAK" caption="menu.countries.loak" tooltip="menu.countries.loak.tt" action="loak"/>
+			<app:item name="menu.countries.ZAZI" caption="menu.countries.zazi" tooltip="menu.countries.zazi.tt" action="zazi"/>
+			<app:item name="menu.countries.TWELT" caption="menu.countries.twelt" tooltip="menu.countries.twelt.tt" action="twelt"/>
+			<app:item name="menu.countries.VODAN" caption="menu.countries.vodan" tooltip="menu.countries.vodan.tt" action="vodan"/>
+			<app:item name="menu.countries.CATHSAY" caption="menu.countries.kathsay" tooltip="menu.countries.kathsay.tt" action="kathsay"/>
+			<app:item name="menu.countries.DADGE" caption="menu.countries.dadge" tooltip="menu.countries.dadge.tt" action="dadge"/>
+			<app:item name="menu.countries.SINDEL" caption="menu.countries.sindel" tooltip="menu.countries.sindel.tt" action="sindel"/>
+			<app:item name="menu.countries.BRUCHR" caption="menu.countries.bruchr" tooltip="menu.countries.bruchr.tt" action="bruchr"/>
+			<app:item name="menu.countries.MANK" caption="menu.countries.mank" tooltip="menu.countries.mank.tt" action="mank"/>
+			<app:item name="menu.countries.PONT" caption="menu.countries.pont" tooltip="menu.countries.pont.tt" action="pont"/>
+			<app:item name="menu.countries.ISSA" caption="menu.countries.issa" tooltip="menu.countries.issa.tt" action="issa"/>
+			<app:item name="menu.countries.IDOLON" caption="menu.countries.idolon" tooltip="menu.countries.idolon.tt" action="idolon"/>
+			<app:item name="menu.countries.CHARSHEN" caption="menu.countries.charshen" tooltip="menu.countries.charshen.tt" action="charshen"/>
+			<app:item name="menu.countries.ZINLY" caption="menu.countries.zinlu" tooltip="menu.countries.zinlu.tt" action="zinlu"/>
+			<app:item name="menu.countries.KEM" caption="menu.countries.kem" tooltip="menu.countries.kem.tt" action="kem"/>
+			<app:item name="menu.countries.DEVRON" caption="menu.countries.devron" tooltip="menu.countries.devron.tt" action="devron"/>
+			<app:item name="menu.countries.DENEB" caption="menu.countries.deneb" tooltip="menu.countries.deneb.tt" action="deneb"/>
+			<app:item name="menu.countries.ORDUN" caption="menu.countries.ordun" tooltip="menu.countries.ordun.tt" action="ordun"/>
+			<app:item name="menu.countries.HAXAC" caption="menu.countries.haxac" tooltip="menu.countries.haxac.tt" action="haxac"/>
+			<app:item name="menu.countries.ZIMM" caption="menu.countries.zimm" tooltip="menu.countries.zimm.tt" action="zimm"/>
+			<app:item name="menu.countries.PATAGON" caption="menu.countries.patagon" tooltip="menu.countries.patagon.tt" action="patagon"/>
+		</app:submenu>
+		<app:submenu name="menu.factory" caption="menu.factory" tooltip="menu.factory.tt" icon="root://chav1961.ji.Application/images/promarea.jpg">
+			<app:item name="menu.factory.academy" caption="menu.factory.academy" tooltip="menu.factory.academy.tt" action="openAcademy" icon="root://chav1961.ji.Application/images/academy.png"/>
+			<app:item name="menu.factory.conserv" caption="menu.factory.conserv" tooltip="menu.factory.conserv.tt" action="openConserv" icon="root://chav1961.ji.Application/images/conserv.png"/>
+			<app:item name="menu.factory.depo" caption="menu.factory.depo" tooltip="menu.factory.depo.tt" action="openDepo" icon="root://chav1961.ji.Application/images/depo.png"/>
+			<app:item name="menu.factory.domennycex" caption="menu.factory.domennycex" tooltip="menu.factory.domennycex.tt" action="openDomennyCex" icon="root://chav1961.ji.Application/images/domennycex.png"/>
+			<app:item name="menu.factory.electrostation" caption="menu.factory.electrostation" tooltip="menu.factory.electrostation.tt" action="openElectrostation" icon="root://chav1961.ji.Application/images/electrostation.png"/>
+			<app:item name="menu.factory.fabricamebeli" caption="menu.factory.fabricamebeli" tooltip="menu.factory.fabricamebeli.tt" action="openFabricaMebeli" icon="root://chav1961.ji.Application/images/fabricamebeli.png"/>
+			<app:item name="menu.factory.fabricaodezhdy" caption="menu.factory.fabricaodezhdy" tooltip="menu.factory.fabricaodezhdy.tt" action="openFabricaOdezhdy" icon="root://chav1961.ji.Application/images/fabricaodezhdy.png"/>
+			<app:item name="menu.factory.lesopilka" caption="menu.factory.lesopilka" tooltip="menu.factory.lesopilka.tt" action="openLesopilka" icon="root://chav1961.ji.Application/images/lesopilka.png"/>
+			<app:item name="menu.factory.mashzavod" caption="menu.factory.mashzavod" tooltip="menu.factory.mashzavod.tt" action="openMashzavod" icon="root://chav1961.ji.Application/images/mashzavod.png"/>
+			<app:item name="menu.factory.nabor" caption="menu.factory.nabor" tooltip="menu.factory.nabor.tt" action="openNabor" icon="root://chav1961.ji.Application/images/nabor.png"/>
+			<app:item name="menu.factory.neftezavod" caption="menu.factory.neftezavod" tooltip="menu.factory.neftezavod.tt" action="openNeftezavod" icon="root://chav1961.ji.Application/images/neftezavod.png"/>
+			<app:item name="menu.factory.tkatskayafabrica" caption="menu.factory.tkatskayafabrica" tooltip="menu.factory.tkatskayafabrica.tt" action="openTkatskayaFabrica" icon="root://chav1961.ji.Application/images/tkatskayafabrica.png"/>
+			<app:item name="menu.factory.univercity" caption="menu.factory.univercity" tooltip="menu.factory.univercity.tt" action="openUnivercity" icon="root://chav1961.ji.Application/images/univercity.png"/>
+		</app:submenu>
 	</app:menu>
 	<app:keyset id="mainmenu.keyset">
 		<app:key code="N" ctrl="true" action="newFile"/>

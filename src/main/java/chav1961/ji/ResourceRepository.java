@@ -1,5 +1,6 @@
 package chav1961.ji;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.GraphicsEnvironment;
@@ -43,6 +44,9 @@ public class ResourceRepository {
 	public static final Map<ApplicationImage,Image>		IMAGES = new HashMap<>();
 	public static final NewspaperNotesRepository		NEWS;
 	public static final Map<Class<?>,HelpContent>		TUTORIALS = new HashMap<>();
+	
+	public static final String							BLOOD_COLOR_NAME = "red2";
+	public static final Color							DEFAULT_BLOOD_COLOR_NAME = Color.RED;
 	
 	public enum ApplicationFont {
 		FONT_1("OglIeUcs8.ttf"),
