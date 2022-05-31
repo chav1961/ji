@@ -35,6 +35,7 @@ public class Utils {
 			@Override public int getChildrenCount() {return 0;}
 			@Override public ContentNodeMetadata getChild(int index) {return null;}
 			@Override public ContentMetadataInterface getOwner() {return null;}
+			@Override public ContentNodeMetadata getChild(String name) {return null;}
 		};
 	}
 }
