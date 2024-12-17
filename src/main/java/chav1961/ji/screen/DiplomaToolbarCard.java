@@ -35,6 +35,7 @@ import chav1961.ji.interfaces.PopupMetadataListener;
 import chav1961.ji.utils.Utils;
 import chav1961.ji.world.WorldGenerator;
 import chav1961.ji.world.WorldGenerator.CountryDescriptor;
+import chav1961.purelib.basic.ColorUtils;
 import chav1961.purelib.basic.PureLibSettings;
 import chav1961.purelib.basic.exceptions.ContentException;
 import chav1961.purelib.basic.exceptions.LocalizationException;
@@ -120,7 +121,7 @@ public class DiplomaToolbarCard extends JPanelWithImage {
 			final JPanel	topRightPanel = new JPanel(new GridLayout(3,1));
 			final JPanel	topPanel = new JPanel(new BorderLayout()), leftButtonPanel = new JPanel(), rightButtonPanel = new JPanel();
 	        
-	        caption.setForeground(PureLibSettings.colorByName(ResourceRepository.BLOOD_COLOR_NAME, ResourceRepository.DEFAULT_BLOOD_COLOR_NAME));
+	        caption.setForeground(ColorUtils.colorByName(ResourceRepository.BLOOD_COLOR_NAME, ResourceRepository.DEFAULT_BLOOD_COLOR_NAME));
 	        caption.setFont(ResourceRepository.ApplicationFont.FONT_9.getFont().deriveFont(Font.BOLD, 64));
 	        caption.setPreferredSize(new Dimension(10,100));
 

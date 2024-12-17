@@ -37,6 +37,7 @@ import chav1961.ji.interfaces.ThreeStateSwitchKeeper;
 import chav1961.ji.interfaces.ValueKeeper;
 import chav1961.ji.models.GoodsRecord.TradeOperationType;
 import chav1961.ji.interfaces.ThreeStateSwitchKeeper.SwitchState;
+import chav1961.purelib.basic.ColorUtils;
 import chav1961.purelib.basic.PureLibSettings;
 
 public class GoodsToolbarCard extends JPanelWithImage {
@@ -104,7 +105,7 @@ public class GoodsToolbarCard extends JPanelWithImage {
 	        
 	        shipments.setForeground(Color.WHITE);
 	        shipments.setFont(new Font("Monospace",Font.BOLD,32));
-	        caption.setForeground(PureLibSettings.colorByName(ResourceRepository.BLOOD_COLOR_NAME, ResourceRepository.DEFAULT_BLOOD_COLOR_NAME));
+	        caption.setForeground(ColorUtils.colorByName(ResourceRepository.BLOOD_COLOR_NAME, ResourceRepository.DEFAULT_BLOOD_COLOR_NAME));
 	        caption.setFont(ResourceRepository.ApplicationFont.FONT_9.getFont().deriveFont(Font.BOLD, 64));
 	        
 	        topPanel.setPreferredSize(new Dimension(10,SHIP_ICON.getIconHeight() + 10));
